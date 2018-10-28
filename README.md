@@ -1,2 +1,2 @@
 # zadatak2
-resenje drugog zadatka
+ispravak resenja drugog zadatka
