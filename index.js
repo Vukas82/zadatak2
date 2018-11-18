@@ -9,7 +9,7 @@ class Unit {
 
 	rechargeForAttack(units) {
 		const call = this;
-		function caller() { call.napadi(units); }
+		function caller() { return call.napadi(units); }
 		setTimeout(caller, this.rechargeTimeUnit);
 	}
 
@@ -25,7 +25,7 @@ class Unit {
 
 		otherUnit[rand].healthUnit -= this.damageUnit;
 		console.log(`UNIT ${this.name} ATTACK ==> ${otherUnit[rand].name} , health : ${otherUnit[rand].healthUnit}`);
-		this.rechargeForAttack(otherUnit);
+		return this.rechargeForAttack(otherUnit);
 	}
 
 	napadi(teams) {
@@ -36,7 +36,7 @@ class Unit {
 		} else if (this.healthUnit <= 0) {
 			console.log(`${this.nameUnit} is out`);
 		} else {
-			this.attack(teamForAttack);
+			return this.attack(teamForAttack);
 		}
 	}
 
