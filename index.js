@@ -1,84 +1,77 @@
-start()
-function start() {
+class Unit {
+	constructor(name, health) {
+		this.nameUnit = name;
+		this.healthUnit = health;
+		this.rechargeTimeUnit = 1000 * this.healthUnit / 100;
+		this.criticalChanceUnit = 10 - this.healthUnit / 10;
+		this.damageUnit = this.healthUnit / 100;
+	}
+
+	rechargeForAttack(units) {
+		const call = this;
+		function caller() { call.napadi(units); }
+		setTimeout(caller, this.rechargeTimeUnit);
+	}
+
+	attack(otherUnits) {
+		const len = otherUnits.length;
+		const otherUnit = otherUnits.filter(unit => unit.nameUnit !== this.name);
+		const rand = Math.floor(Math.random() * (len));
+
+		if (otherUnit[rand].criticalChanceUnit >= Math.floor(Math.random() * (100)) + 1) {
+			this.damageUnit *= 2;
+			console.log(`critical hit for ${otherUnit[rand].nameUnit} team`);
+		}
+
+		otherUnit[rand].healthUnit -= this.damageUnit;
+		console.log(`UNIT ${this.name} ATTACK ==> ${otherUnit[rand].name} , health : ${otherUnit[rand].healthUnit}`);
+		this.rechargeForAttack(otherUnit);
+	}
+
+	napadi(teams) {
+		let teamForAttack = teams.filter(unit => unit.nameUnit !== this.nameUnit);
+		teamForAttack = teamForAttack.filter(unit => unit.healthUnit > 0);
+		if (this.healthUnit > 0 && teamForAttack.length < 1) {
+			console.log(`Tim ${this.name} is winner!`);
+		} else if (this.healthUnit <= 0) {
+			console.log(`${this.nameUnit} is out`);
+		} else {
+			this.attack(teamForAttack);
+		}
+	}
 
 
+	get name() { return this.nameUnit; }
 
-var Tim_1 = {
-        name: 'A L F A',
-        health: 100,
-        damage : dam,              
-        criticalChance: critical  
-};    
-var Tim_2 = {
-        name: 'B E T A',
-        health: 100,
-        damage : dam,              
-        criticalChance: critical  
-};
-var Tim_3 = {
-        name: 'G A M A',
-        health: 100,
-        damage : dam,              
-        criticalChance: critical  
-};
-var Tim_4 = {
-        name: 'D E L T A',
-        health: 100,
-        damage : dam,              
-        criticalChance: critical  
-};
-var Tim_5 = {
-        name: 'E P S I L O N',
-        health: 100,
-        damage : dam,              
-        criticalChance: critical  
-};
+	set name(name) { this.nameUnit = name; }
 
-var sviTimovi = [Tim_1,Tim_2,Tim_3,Tim_4,Tim_5]
 
-console.log(sviTimovi.length+'  JE BROJ TIMOVA NA POCETKU')
+	get health() { return this.healthUnit; }
 
-izborTima()      //    OVDDE SE POZIVA FUN IZBOR TIMA     !!!!!!!!!!!!!!!!!!
+	set health(health) { this.healthUnit = health; }
 
-function izborTima() { //random bira TIM    I  AKTIVIIRA FUNKCIJU NAPADA                !!!!!!!!!!!!!!!!!
 
-        var timovi = sviTimovi;      
-        var a = timovi[Math.floor(Math.random() * timovi.length)]
-        var b = timovi[Math.floor(Math.random() * timovi.length)]
-        if(a === b){return izborTima()}
-        else if(timovi.length === 2){console.error(' IGRA JE GOTOVA !!');console.log(' preostali timovi su : '+ a.name+' i '+b.name);return} 
-        else{console.log('IZABRANI TIMOVI SU : '+a.name+'  I  '+b.name)}
-        console.log('health '+a.name+' je : '+a.health)
-        console.log('health '+b.name+' je : '+b.health)
-        console.log('damage '+a.name+' je : '+a.damage(a))
-        console.log('damage '+b.name+' je : '+b.damage(b))
-        console.log('criticalChance '+a.name+' je : '+a.criticalChance(a))     
-        console.log('criticalChance '+b.name+' je : '+b.criticalChance(b))     
-        dam(a,b)
-    
-        var rc = setTimeout(recharge, 1000 * ((a.health)/100)); // setInt ZA FUN RECHARGE KOJA POZIVA NAPAD
-    
-function recharge(x,y){
-        napad(a,b)
-}    
+	get rechargeTime() { return this.rechargeTimeUnit; }
+
+	set rechargeTime(health) { this.rechargeTimeUnit = 1000 * health / 100; }
+
+
+	get damage() { return this.damageUnit; }
+
+	set damage(health) { this.damageUnit = health / 100; }
+
+
+	get criticalChance() { return this.criticalChanceUnit; }
+
+	set criticalChance(health) { this.criticalChanceUnit = 10 - health / 10; }
 }
-function dam(x,y){ 
-         return  x.health/100;
-}
-function napad(x,y){    
-        console.log(y.name+'    NAPADA ==>>    '+x.name)
-        console.log("HEALT PRE NAPADA "+x.name+': '+x.health)              
-        x.health = x.health - y.damage(y) ;                         
-        if(sviTimovi.length <= 2){console.error(' IGRA JE GOTOVA !!');console.log(' preostali timovi su : '+ y.name+' i '+y.name); return }
-        else if(x.health <= 0){sviTimovi.splice( sviTimovi.indexOf(x.name), 1 ) }else{console.log("HEALT POSLE NAPADA "+x.name+': '+x.health)}
-        console.log(sviTimovi.length+'  JE BROJ TIMOVA NA KRAJU')
-        console.log(sviTimovi);
-      
-       izborTima()
-                   }                                            
-function critical(){
-        var crChDabl = Math.random(0,100)  
-        var crCh = 10 - this.health/10
-        if(crChDabl === crCh){return crCh*2;console.warn(this.name+' DABL DAMAGE !!!!')}else {return crCh} 
-}
-}
+
+const unit1 = new Unit('ALFA', 20);
+const unit2 = new Unit('BETA', 20);
+const unit3 = new Unit('GAMA', 20);
+const unit4 = new Unit('DELTA', 20);
+const unit5 = new Unit('EPSILON', 20);
+const timovi = [unit1, unit2, unit3, unit4, unit5];
+
+
+timovi.forEach(x => x.rechargeForAttack(timovi));

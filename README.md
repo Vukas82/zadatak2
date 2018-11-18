@@ -1,2 +1,3 @@
-# zadatak2
-resenje drugog zadatka
+simulation of the battle.
+
+For start use: node index.js
