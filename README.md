@@ -1,4 +1,4 @@
-Simulation of the battle.
+# Simulation of the battle.
 
 Five Units attacking each other until only one is left. 
 Each Unit has following properties:
