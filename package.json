@@ -16,7 +16,7 @@
     "eslint-plugin-react": "^7.11.1"
   },
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "node ./index.js",
     "eslint": "npx eslint -- ./src/."
   }
 }
